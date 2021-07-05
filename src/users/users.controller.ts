@@ -5,6 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { User } from 'src/common/decorators/user.decorator';
 import { UserDto } from 'src/common/dto/user.dto';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
@@ -19,8 +20,10 @@ export class UsersController {
   })
   @ApiOperation({ summary: '내 정보 조회' }) // Swagger Api 주석
   @Get()
-  getUesrs(@Req() req) {
-    return req.user;
+  getUsers(@User() user) {
+    // Custom Decorator
+    return user;
+    // res.locals.jwt
   }
   @ApiOperation({ summary: '회원가입' })
   @Post()
@@ -39,7 +42,9 @@ export class UsersController {
   })
   @ApiOperation({ summary: '로그인' })
   @Post('login') // post/users/login
-  logIn() {}
+  logIn(@User() user) {
+    return user;
+  }
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout') // post/users/logout
   logOut(@Req() req, @Res() res) {
