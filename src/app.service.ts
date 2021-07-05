@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { userInfo } from 'os';
+import { UsersService } from './users/users.service';
 
 // controller와 service 분리하는 이유
 // controller : res, req 처리
@@ -8,6 +9,8 @@ import { userInfo } from 'os';
 // 재사용성 증가, 테스팅(jest.mock() 으로 일일히 안해줘도 되고 서비스 함수만 테스팅 가능) 할때 유리함
 @Injectable()
 export class AppService {
+  constructor(private usersService: UsersService) {}
+
   getUser(): string {
     return 'Hello World!';
   }
@@ -15,7 +18,8 @@ export class AppService {
     return 'Hello World~';
   }
 
-  getHello(): string {
+  async getHello() {
+    this.usersService.getUser();
     return process.env.SECRET;
   }
 }
