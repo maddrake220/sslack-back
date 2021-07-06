@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiOperation,
@@ -7,9 +16,13 @@ import {
 } from '@nestjs/swagger';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserDto } from 'src/common/dto/user.dto';
+import { UndefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 
+@UseInterceptors(UndefinedToNullInterceptor)
+// 인터셉터를 적용하여 컨트롤러에서 return하는 값이 undefined이면 Null로 바꿔준다.
+// 개별 라우터에 적용 가능
 @ApiTags('User')
 @Controller('api/users')
 export class UsersController {
