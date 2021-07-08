@@ -39,7 +39,7 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn() // soft delete
   deletedAt: Date | null;
 
   @OneToMany(() => ChannelChats, (channelchats) => channelchats.User)

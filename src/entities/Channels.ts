@@ -45,7 +45,7 @@ export class Channels {
   ChannelChats: ChannelChats[];
 
   @OneToMany(() => ChannelMembers, (channelMembers) => channelMembers.Channel, {
-    cascade: ['insert'],
+    cascade: ['insert'], // 두개의 테이블을 동시에 수정할 때
   })
   ChannelMembers: ChannelMembers[];
 
